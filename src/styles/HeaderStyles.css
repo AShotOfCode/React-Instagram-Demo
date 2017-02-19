@@ -1,0 +1,46 @@
+@media (max-width: 1920px) {
+.logo {
+	margin-top: 20px;
+	height: 35px;
+	width: 35px;
+}
+
+.logoText {
+	border-left: 1px rgba(0,0,0,0.3) solid;
+	height: 50px;
+	width: 141px;
+	margin-top: 10px;
+	padding-left: 10px;
+}
+.nav {
+	margin: 10px 20px 0px 10px;
+}
+.navBar {
+	background-color: #fff;
+	padding-bottom: 20px;
+}
+
+.navTitle {
+	margin-top: 20px;
+	border-left: 1px rgba(0,0,0,0.3) solid;
+}
+
+}
+@media (max-width: 766px) {
+.logoText {
+	border-left: 0px;
+	height: 50px;
+	width: 141px;
+	margin-top: -5px;
+	padding-left: 10px;
+}
+.nav {
+	margin: 0px;
+}
+.toggle {
+	margin-top: 20px;
+}
+.navBar {
+	padding-bottom: 0px;
+}
+}
