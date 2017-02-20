@@ -6,6 +6,7 @@ import {
   Col,
   Thumbnail,
   Button,
+  Glyphicon
 } from 'react-bootstrap'
 
 import axios from 'axios'
@@ -18,7 +19,8 @@ export default class Content extends Component {
     super(props)
     this.state = {
       posts: [],
-      comments: []
+      comments: [],
+      scores: []
     }
   }
 
@@ -32,7 +34,11 @@ export default class Content extends Component {
     xmlHttp.send( null );
     const response = JSON.parse(xmlHttp.responseText)
     const posts = response.data.children
-    this.setState({ posts }, callback)
+    console.log(posts)
+    const scores = posts.map((post) => {
+        return post.data.score
+    })
+    this.setState({ posts, scores }, callback)
     return xmlHttp.responseText;
   }
 
@@ -60,10 +66,38 @@ export default class Content extends Component {
       <Grid>
         <Row>
           {this.state.posts.map((post, index) => {
+            let numOfComments = this.state.comments[index].length
+            let { scores } = this.state
             return (
               <Col xs={12} md={12} key={index}>
                 <Thumbnail src={post.data.url} alt='This image is no longer here'>
-                  <h4><b>{post.data.score} likes</b></h4>
+                  <h4>
+                    <b>{scores[index]} likes</b> 
+                    <Button
+                      className="heart"
+                      bsClass="heart"
+                      bsStyle="link"
+                      onClick={() => {
+                        var x = document.getElementsByClassName('heart')
+                        if (x[index].style.color === 'red') {
+                          x[index].style.color = 'rgba(0,0,0,0.3'
+                          scores[index]--
+                          console.log(scores[index])
+                          this.setState({ scores })
+                        } else {
+                          x[index].style.color = 'red'
+                          scores[index]++
+                          console.log(scores[index])
+                          this.setState({ scores })
+                        }
+                      }}
+                    >
+                      <Glyphicon
+                        glyph="heart"
+                        className="icon"
+                      />
+                    </Button>
+                  </h4>
                   <h4><b>{post.data.author}</b> - {post.data.title}</h4>
                   {this.state.comments[index].map((comment, index) => {
                       if (index < 3) {
@@ -75,7 +109,7 @@ export default class Content extends Component {
                   }
                   <a href={'http://reddit.com' + post.data.permalink}>{this.state.comments[index].length > 3
                     ? 
-                    `View all ${this.state.comments[index].length} comments`
+                    `View all ${numOfComments} comments`
                     : ''}
                     </a>
                 </Thumbnail>
