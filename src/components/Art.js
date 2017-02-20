@@ -14,7 +14,7 @@ import axios from 'axios'
 import logo from '../assets/img/logo.png'
 import '../styles/ContentStyles.css'
 
-export default class Content extends Component {
+export default class Art extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -25,7 +25,7 @@ export default class Content extends Component {
   }
 
   componentDidMount = () => {
-    this.httpGet('https://www.reddit.com/r/EarthPorn/top.json', this.getComments)
+    this.httpGet('https://www.reddit.com/r/MinimalWallpaper/top.json', this.getComments)
   }
 
   httpGet = (url, callback) => {
@@ -45,7 +45,7 @@ export default class Content extends Component {
   getComments = () => {
     let { posts } = this.state
     posts = posts.map((post) => {
-      return axios.get('https://www.reddit.com/r/EarthPorn/comments/' + post.data.id + '.json?')
+      return axios.get('https://www.reddit.com/r/MinimalWallpaper/comments/' + post.data.id + '.json?')
     })
     axios.all(posts)
     .then((results) => {
@@ -72,7 +72,7 @@ export default class Content extends Component {
               <Col xs={12} md={12} key={index}>
                 <Thumbnail src={post.data.url} alt='This image is no longer here'>
                   <h4>
-                    <b>{scores[index]} likes</b> 
+                    <b>{scores[index]} votes</b> 
                     <Button
                       className="heart"
                       bsClass="heart"
